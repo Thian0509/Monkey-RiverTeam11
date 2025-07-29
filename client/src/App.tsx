@@ -8,11 +8,12 @@ import Notifications from './pages/Notifications'; // Assuming this is the compo
 import ProfileSettings from './pages/ProfileSettings';
 import Authenticate from './pages/Authenticate';
 
+
 // Import the NotificationProvider from your context file
 import { NotificationProvider } from './context/NotificationContext';
 
-// PrimeReact themes (ensure you have these installed)
-import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/themes/tailwind-light/theme.css';
+
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css'; // Don't forget primeicons for the icons!
 
