@@ -10,7 +10,7 @@ import { classNames } from 'primereact/utils';
 import { useAuth } from '../hooks/useAuth';
 
 // Import your useNotifications hook
-import { useNotifications } from '../context/NotificationContext';
+import { useNotifications } from '../hooks/useNotification';
 
 interface FormData {
     name: string;
@@ -121,7 +121,7 @@ export default function Authenticate() {
     return (
         <div className="flex items-center justify-center w-screen bg-white h-screen">
             <Toast ref={toast} /> {/* This Toast is for immediate, temporary messages */}
-            <div className="flex flex-col gap-4 max-w-md w-full p-4 border rounded-lg shadow-lg"> {/* Added padding, border, shadow */}
+            <div className="flex flex-col gap-4 max-w-md w-full"> {/* Added padding, border, shadow */}
                 <h2 className="text-center text-black text-2xl">{isRegister ? 'Register' : 'Login'}</h2>
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4"> {/* Increased gap for better spacing */}
                     {/* Name Input (only for registration) */}
@@ -131,16 +131,13 @@ export default function Authenticate() {
                             control={control}
                             rules={{ required: 'Name is required.' }}
                             render={({ field, fieldState }) => (
-                                <div className="p-float-label"> {/* Added float label */}
-                                    <InputText
-                                        id={field.name}
-                                        {...field}
-                                        type="text"
-                                        className={classNames({ 'p-invalid': fieldState.error })}
-                                        placeholder="Name" // Placeholder is usually redundant with float label
-                                    />
-                                    <label htmlFor={field.name}>Name</label>
-                                </div>
+                                <InputText
+                                    id={field.name}
+                                    {...field}
+                                    type="text"
+                                    className={classNames({ 'p-invalid': fieldState.error })}
+                                    placeholder="Name" // Placeholder is usually redundant with float label
+                                />
                             )}
                         />
                     )}
@@ -155,16 +152,13 @@ export default function Authenticate() {
                             pattern: { value: /^\S+@\S+$/i, message: 'Invalid email address.' }
                         }}
                         render={({ field, fieldState }) => (
-                            <div className="p-float-label">
-                                <InputText
-                                    id={field.name}
-                                    {...field}
-                                    type="email"
-                                    className={classNames({ 'p-invalid': fieldState.error })}
-                                    placeholder="Email"
-                                />
-                                <label htmlFor={field.name}>Email</label>
-                            </div>
+                            <InputText
+                                id={field.name}
+                                {...field}
+                                type="email"
+                                className={classNames({ 'p-invalid': fieldState.error })}
+                                placeholder="Email"
+                            />
                         )}
                     />
                     {getFormErrorMessage('email')}
@@ -180,16 +174,13 @@ export default function Authenticate() {
                             pattern: { value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, message: 'Password must be at least 8 characters long and contain letters and numbers.' }
                         }}
                         render={({ field, fieldState }) => (
-                            <div className="p-float-label">
-                                <InputText // Changed to InputText to match your original
-                                    id={field.name}
-                                    {...field}
-                                    type="password"
-                                    className={classNames({ 'p-invalid': fieldState.error })}
-                                    placeholder="Password"
-                                />
-                                <label htmlFor={field.name}>Password</label>
-                            </div>
+                            <InputText // Changed to InputText to match your original
+                                id={field.name}
+                                {...field}
+                                type="password"
+                                className={classNames({ 'p-invalid': fieldState.error })}
+                                placeholder="Password"
+                            />
                         )}
                     />
                     {getFormErrorMessage('password')}
@@ -204,16 +195,13 @@ export default function Authenticate() {
                                     validate: (value: string) => value === password_watch || 'The passwords do not match.'
                                 }}
                                 render={({ field, fieldState }) => (
-                                    <div className="p-float-label">
-                                        <InputText // Changed to InputText
-                                            id={field.name}
-                                            {...field}
-                                            type="password"
-                                            className={classNames({ 'p-invalid': fieldState.error })}
-                                            placeholder="Confirm Password"
-                                        />
-                                        <label htmlFor={field.name}>Confirm Password</label>
-                                    </div>
+                                    <InputText // Changed to InputText
+                                        id={field.name}
+                                        {...field}
+                                        type="password"
+                                        className={classNames({ 'p-invalid': fieldState.error })}
+                                        placeholder="Confirm Password"
+                                    />
                                 )}
                             />
                             {getFormErrorMessage('confirmPassword')}

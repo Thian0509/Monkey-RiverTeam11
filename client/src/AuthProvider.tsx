@@ -36,6 +36,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     if (data.token) {
       localStorage.setItem("token", data.token);
       setToken(data.token);
+      setUser({ email: parseJwt(data.token).email });
     }
   };
 

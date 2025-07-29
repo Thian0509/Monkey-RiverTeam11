@@ -1,24 +1,7 @@
-// src/context/NotificationContext.tsx
-import React, { createContext, useContext, useState, ReactNode, useCallback, useEffect } from 'react';
-
-// Define the shape of your notification item
-interface NotificationItem {
-  id: string;
-  message: string;
-  timestamp: string;
-  read: boolean;
-}
-
-// Define the shape of the context value that consumers will receive
-interface NotificationContextType {
-  notifications: NotificationItem[];
-  addNotification: (message: string) => void;
-  removeNotification: (id: string) => void;
-  markAsRead: (id: string) => void;
-  markAllAsRead: () => void;
-}
-
-const NotificationContext = createContext<NotificationContextType | undefined>(undefined);
+import React, { useState, useCallback, useEffect } from 'react';
+import { NotificationContext } from '../hooks/useNotification';
+import type { NotificationItem, NotificationContextType } from '../hooks/useNotification';
+import type { ReactNode } from 'react';
 
 interface NotificationProviderProps {
   children: ReactNode;
@@ -91,12 +74,4 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
       {children}
     </NotificationContext.Provider>
   );
-};
-
-export const useNotifications = () => {
-  const context = useContext(NotificationContext);
-  if (context === undefined) {
-    throw new Error('useNotifications must be used within a NotificationProvider');
-  }
-  return context;
 };

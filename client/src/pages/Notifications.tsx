@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'primereact/button';
-import { useNotifications } from '../context/NotificationContext'; // Import your custom hook
+import { useNotifications } from '../hooks/useNotification';
 
 export const Notifications: React.FC = () => {
   // Use the custom hook to get notifications and the functions to manipulate them
