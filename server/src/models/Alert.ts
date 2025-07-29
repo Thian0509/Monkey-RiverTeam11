@@ -1,7 +1,7 @@
-import mongoose, { Document, Schema } from 'mongoose';
+import mongoose, { Document, Schema } from "mongoose";
 
 export interface IAlert extends Document {
-  type: 'info' | 'warning' | 'danger';
+  type: "info" | "warning" | "danger";
   message: string;
   read: boolean;
   userId?: mongoose.Types.ObjectId;

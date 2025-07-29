@@ -7,12 +7,10 @@ export const createDestination = async (req: Request, res: Response) => {
   try {
     const newDestination: IMonitoredDestination = req.body;
     const destination = await MonitoredDestination.create(newDestination);
-    res
-      .status(201)
-      .json({
-        message: "Monitored destination created successfully",
-        destination,
-      });
+    res.status(201).json({
+      message: "Monitored destination created successfully",
+      destination,
+    });
   } catch (error: any) {
     console.error("Error creating monitored destination:", error);
     res
@@ -24,12 +22,10 @@ export const createDestination = async (req: Request, res: Response) => {
 export const getAllDestinations = async (req: Request, res: Response) => {
   try {
     const destinations = await MonitoredDestination.find({});
-    res
-      .status(200)
-      .json({
-        message: "Monitored destinations fetched successfully",
-        destinations,
-      });
+    res.status(200).json({
+      message: "Monitored destinations fetched successfully",
+      destinations,
+    });
   } catch (error: any) {
     console.error("Error fetching monitored destinations:", error);
     res
@@ -47,12 +43,10 @@ export const getDestinationById = async (req: Request, res: Response) => {
         .status(404)
         .json({ message: "Monitored destination not found" });
     }
-    res
-      .status(200)
-      .json({
-        message: "Monitored destination fetched successfully",
-        destination,
-      });
+    res.status(200).json({
+      message: "Monitored destination fetched successfully",
+      destination,
+    });
   } catch (error: any) {
     console.error("Error fetching monitored destination:", error);
     res
@@ -75,12 +69,10 @@ export const updateDestination = async (req: Request, res: Response) => {
         .status(404)
         .json({ message: "Monitored destination not found" });
     }
-    res
-      .status(200)
-      .json({
-        message: "Monitored destination updated successfully",
-        destination,
-      });
+    res.status(200).json({
+      message: "Monitored destination updated successfully",
+      destination,
+    });
   } catch (error: any) {
     console.error("Error updating monitored destination:", error);
     res
