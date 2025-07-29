@@ -44,6 +44,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     localStorage.removeItem("token");
     setToken(null);
     setUser(null);
+    window.location.href = "/authenticate";
   };
 
   const register = async (name: string, email: string, password: string) => {

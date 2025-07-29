@@ -1,4 +1,5 @@
 import React from 'react'
+import { LogoutButton } from './LogoutButton';
 
 const navBarItems = [
   {
@@ -20,11 +21,12 @@ const navBarItems = [
     label: 'Account',
     icon: 'pi pi-user',
     link: '/account'
-  },{
+  },
+  {
     label: 'About',
     icon: 'pi pi-info-circle',
     link: '/about'
-  }
+  },
 ]
 
 class NavBar extends React.Component {
@@ -33,7 +35,7 @@ class NavBar extends React.Component {
       <nav className="p-4 sticky top-0 w-full shadow-md z-40 bg-white" role="navigation">
         <div className="flex justify-between items-center">
           <div className="text-lg font-bold">M&R Travel Risk Assessment Tool</div>
-          <div className="flex gap-2 items-center text-sm">
+          <div className="flex gap-3 items-center text-sm">
             {navBarItems.map((item) => (
               <a
                 key={item.label}
@@ -44,6 +46,7 @@ class NavBar extends React.Component {
                 {item.label}
               </a>
             ))}
+            <LogoutButton />
           </div>
         </div>
       </nav>

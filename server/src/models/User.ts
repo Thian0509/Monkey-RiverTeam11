@@ -5,6 +5,7 @@ export interface IUser extends mongoose.Document {
   email: string;
   passwordHash: string;
   role: "admin" | "participant";
+  location: string;
   receiveEmailNotifications: boolean;
   notificationThreshold: number;
 }
@@ -19,6 +20,7 @@ const userSchema = new mongoose.Schema<IUser>(
       enum: ["admin", "participant"],
       default: "participant",
     },
+    location: { type: String, default: "Unknown" },
     receiveEmailNotifications: { type: Boolean, default: true },
     notificationThreshold: { type: Number, default: 5 },
   },
