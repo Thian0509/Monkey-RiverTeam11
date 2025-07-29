@@ -2,19 +2,14 @@ import mongoose, { Document, Schema } from "mongoose";
 
 export interface IMonitoredDestination extends Document {
   location: string;
-  riskLevel: "Low" | "Medium" | "High" | "Critical";
+  riskLevel: number;
   lastChecked: Date;
 }
 
 const MonitoredDestinationSchema: Schema = new Schema(
   {
     location: { type: String, required: true, trim: true },
-    riskLevel: {
-      type: String,
-      enum: ["Low", "Medium", "High", "Critical"],
-      default: "Low",
-      required: true,
-    },
+    riskLevel: { type: Number, required: true, default: 0 },
     lastChecked: { type: Date, required: true, default: Date.now },
   },
   {
