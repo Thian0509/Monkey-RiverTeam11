@@ -4,6 +4,7 @@
     "start": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\""
   },
   "dependencies": {
-    "concurrently": "^9.2.0"
+    "concurrently": "^9.2.0",
+    "react-hook-form": "^7.61.1"
   }
 }
