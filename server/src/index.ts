@@ -1,9 +1,5 @@
-import express from 'express'
-import cors from 'cors'
-
-const app = express()
-app.use(cors())
-app.use(express.json())
+import Express from "./express"
+const app = new Express().app;
 
 app.get('/api/hello', (_req, res) => {
   console.log('✅ /api/hello called')
