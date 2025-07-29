@@ -10,6 +10,7 @@ import { classNames } from 'primereact/utils';
 import { useAuth } from '../hooks/useAuth';
 
 interface FormData {
+    name: string;
     email: string;
     password: string;
     confirmPassword: string;
@@ -18,10 +19,11 @@ interface FormData {
 export default function Authenticate() {
     const [isRegister, setIsRegister] = useState<boolean>(false);
     const toast = useRef<Toast>(null);
-    const { login } = useAuth();
+    const { login, register } = useAuth();
 
     const { control, handleSubmit, formState: { errors, isSubmitting }, watch, reset } = useForm<FormData>({
         defaultValues: {
+            name: '',
             email: '',
             password: '',
             confirmPassword: ''
@@ -42,8 +44,12 @@ export default function Authenticate() {
             // make use of auth provider for login or registration
             if (isRegister) {
                 // Registration logic here
-                // For example, you might want to call an API endpoint to register the user
-                // await register(data.email, data.password);
+                try {
+                  await register(data.name, data.email, data.password);
+                } catch (error) {
+                  console.error('Registration failed:', error);
+                  throw new Error('Registration failed. Please try again.');
+                }
             } else {
                 // Login logic here
                 try {
@@ -80,6 +86,25 @@ export default function Authenticate() {
             <div className="flex flex-col gap-4 max-w-md w-full">
               <h2 className="text-center text-black text-2xl">{isRegister ? 'Register' : 'Login'}</h2>
               <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
+                  {/* Name Input (only for registration) */}
+                  {isRegister && (
+                      <Controller
+                          name="name"
+                          control={control}
+                          rules={{ required: 'Name is required.' }}
+                          render={({ field, fieldState }) => (
+                            <InputText
+                                id={field.name}
+                                {...field}
+                                type="text"
+                                className={classNames({ 'p-invalid': fieldState.error })}
+                                placeholder="Name"
+                            />
+                          )}
+                      />
+                  )}
+                  {isRegister && getFormErrorMessage('name')}
+
                   {/* Email Input */}
                   <Controller
                       name="email"
@@ -104,7 +129,10 @@ export default function Authenticate() {
                   <Controller
                       name="password"
                       control={control}
-                      rules={{ required: 'Password is required.' }}
+                      rules={{ 
+                        required: 'Password is required.', 
+                        pattern: { value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, message: 'Password must be at least 8 characters long and ONLY contain letters and numbers.' }
+                      }}
                       render={({ field, fieldState }) => (
                           <InputText
                               id={field.name} 

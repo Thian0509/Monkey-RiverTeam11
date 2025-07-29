@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     if (token) {
-      setUser({ email: parseJwt(token).email }); // Or fetch from backend
+      setUser({ email: parseJwt(token).email });
       console.log("User authenticated with token:", token);
     }
   }, [token]);
@@ -46,11 +46,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setUser(null);
   };
 
-  const register = async (email: string, password: string) => {
+  const register = async (name: string, email: string, password: string) => {
     const res = await fetch("/api/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({ name, email, password })
     });
     const data = await res.json();
 

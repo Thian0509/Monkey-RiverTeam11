@@ -31,6 +31,7 @@ export const loginUser = async (req: Request, res: Response) => {
 };
 
 export const registerUser = async (req: Request, res: Response) => {
+  console.log("Registration attempt with body:", req.body);
   const { name, email, password } = req.body;
   const existing = await User.findOne({ email });
 
