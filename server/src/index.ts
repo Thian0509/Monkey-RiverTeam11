@@ -1,18 +1,24 @@
-import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import connectDB from './database'
+import Express from "./express"
 
 dotenv.config()
 connectDB()
 
-const app = express()
-app.use(cors())
-app.use(express.json())
+const app = new Express().app;
 
-app.get('/api/hello', (_req, res) => {
-  res.json({ message: 'Hello from TypeScript Express backend!' })
-})
+app.get('/api/db-health', (_req, res) => {
+  console.log('✅ /api/db-health called')
+  const dbHealthy = true;
+  if (dbHealthy) {
+    res.status(200).json({ status: 'Database is healthy' });
+  } else {
+    res.status(500).json({ status: 'Database is down' });
+  }
+});
+
+app.use('/api/users', require('./routes/users'));
 
 import userRoutes from './routes/userRoutes'
 import authRoutes from './routes/authRoutes'

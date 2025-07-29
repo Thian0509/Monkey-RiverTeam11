@@ -1,10 +1,21 @@
+import { useAuth } from '../hooks/useAuth';
+
 function Home() {
+  const { user } = useAuth();
+
   return (
-    <div>
+    <div className="home">
       <h1>Welcome to the Home Page</h1>
-      <p>This is the main content of the home page.</p>
+      {user ? (
+        <p>Hello, {user.email}!</p>
+      ) : (
+        <div>
+          <p>You are not logged in.</p>
+          <a href="/auth">Login</a>
+        </div>
+      )}
     </div>
   );
-}
+};
 
 export default Home;
