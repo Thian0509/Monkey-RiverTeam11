@@ -9,16 +9,13 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    defaults:
+      runs:
+        working-directory: client
 
     steps:
-      - name: Clear Node Modules Cache (if needed)
-        run: rm -rf node_modules
-
       - name: Checkout code
         uses: actions/checkout@v3
-      
-      - name: CD to client directory
-        run: cd client
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
