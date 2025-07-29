@@ -49,6 +49,6 @@ Our focus was to provide the user with a clean and easy-to-use interface. The UI
 
 - Iwan de Jong ([LinkedIn](https://linkedin.com/in/iwandejong), [GitHub](https://github.com/iwandejong))
 - Thian du Plessis ([LinkedIn](www.linkedin.com/in/thian-du-plessis), [GitHub](https://github.com/Thian0509))
-- Tiaan Dorfling ([LinkedIn](https://www.linkedin.com/in/tiaan-dorfling-1313432bb),GitHub](https://github.com/tiaandorfling))
+- Tiaan Dorfling ([LinkedIn](https://www.linkedin.com/in/tiaan-dorfling-1313432bb),[GitHub](https://github.com/tiaandorfling))
 
 
