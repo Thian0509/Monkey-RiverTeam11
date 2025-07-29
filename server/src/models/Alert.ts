@@ -1,6 +1,13 @@
-import mongoose from "mongoose";
+import mongoose, { Document, Schema } from 'mongoose';
 
-const alertSchema = new mongoose.Schema(
+export interface IAlert extends Document {
+  type: 'info' | 'warning' | 'danger';
+  message: string;
+  read: boolean;
+  userId?: mongoose.Types.ObjectId;
+}
+
+const alertSchema = new mongoose.Schema<IAlert>(
   {
     type: { type: String, enum: ["info", "warning", "danger"], required: true },
     message: { type: String, required: true },
@@ -12,4 +19,4 @@ const alertSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("Alert", alertSchema, "alerts");
+export default mongoose.model<IAlert>("Alert", alertSchema, "alerts");

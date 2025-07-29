@@ -29,10 +29,12 @@ app.get("/api/db-health", (_req, res) => {
 import usersRoutes from "./routes/users";
 import authRoutes from "./routes/authRoutes";
 import monitoredDestinationRoutes from "./routes/monitoredDestinationRoutes";
+import alertRoutes from './routes/alertRoutes';
 
 app.use("/api/users", usersRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/destinations", monitoredDestinationRoutes);
+app.use('/api/alerts', alertRoutes);
 
 import { errorHandler } from "./middleware/errorHandler";
 app.use(errorHandler);
