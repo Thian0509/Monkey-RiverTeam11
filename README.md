@@ -3,6 +3,9 @@
 Hi! We're the ever-so-strong team 11 participating in the Monkey and River Hackathon 2025! This hackathon project built in less than 15 hours focuses on Travel Risk. This project is an example of an essential tool that can be used by both insurance companies and individuals looking to travel the world!
 
 ## Demo
+Click to open the video in YouTube:
+
+[![Watch the video](https://img.youtube.com/vi/A3XSSMVmbeU/0.jpg)](https://youtu.be/A3XSSMVmbeU)
 
 
 ## Architecture
@@ -17,6 +20,7 @@ For our frontend, we went with React as most of us were familiar with it. Our ba
 
 ## Testing
 [![codecov](https://codecov.io/gh/Thian0509/Monkey-RiverTeam11/graph/badge.svg?token=42T9E0VHTT)](https://codecov.io/gh/Thian0509/Monkey-RiverTeam11)
+
 For testing we used Vitest as our framework of choice. Furthermore, we made use of CodeCov to track our code coverage on the `main` branch. As seen in the figure below, we tried to maximise the coverage by testing each file a bit.
 ![alt text](codecov.png)
 We also tested the API endpoints on Postman
