@@ -3,7 +3,8 @@
   "scripts": {
     "start": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\""
   },
-  "devDependencies": {
-    "concurrently": "^9.2.0"
+  "dependencies": {
+    "concurrently": "^9.2.0",
+    "react-hook-form": "^7.61.1"
   }
 }
