@@ -1,5 +1,3 @@
-import React from 'react';
-
 function About() {
   return (
     <div className="font-sans leading-relaxed text-gray-800 max-w-3xl mx-auto my-10 p-6 bg-white rounded-lg shadow-md text-center">

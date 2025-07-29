@@ -30,7 +30,7 @@ const navBarItems = [
 class NavBar extends React.Component {
   render() {
     return (
-      <nav className="p-4 sticky top-0 w-full shadow-md z-40">
+      <nav className="p-4 sticky top-0 w-full shadow-md z-40" role="navigation">
         <div className="flex justify-between items-center">
           <div className="text-lg font-bold">M&R Travel Risk Assessment Tool</div>
           <div className="flex gap-2 items-center text-sm">
