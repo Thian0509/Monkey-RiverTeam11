@@ -5,7 +5,7 @@ import Layout from "./Layout";
 import Home from './pages/Home';
 import TravelRisk from './pages/TravelRisk';
 import Notifications from './pages/Notifications';
-import ProfileSettings from './pages/ProfileSettings';
+import ProfileSettings from './pages/Account';
 import Authenticate from './pages/Authenticate';
 
 import 'primereact/resources/themes/tailwind-light/theme.css';
