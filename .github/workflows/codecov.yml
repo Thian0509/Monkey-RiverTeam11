@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Clear Node Modules Cache (if needed)
+        run: rm -rf node_modules
+
       - name: Checkout code
         uses: actions/checkout@v3
       
