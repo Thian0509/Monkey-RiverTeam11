@@ -55,14 +55,20 @@ export default function Authenticate() {
                     });
                     reset();
                     setIsRegister(false);
+                    window.location.href = '/';
                 } catch (error) {
                     console.error('Registration failed:', error);
-                    const errorMessage = error || 'Registration failed. Please try again.';
-                    addNotification(`Registration failed for ${data.name}. ${errorMessage}`);
+                    const errorMessage =
+                        error instanceof Error
+                            ? error.message
+                            : typeof error === 'string'
+                            ? error
+                            : 'Registration failed. Please check your credentials.';
+
                     toast.current?.show({
                         severity: 'error',
                         summary: 'Registration Error',
-                        detail: errorMessage as string,
+                        detail: errorMessage,
                         life: 3000
                     });
                     return;
@@ -78,21 +84,25 @@ export default function Authenticate() {
                         life: 3000
                     });
                     reset();
+                    window.location.href = '/';
                 } catch (error) {
                     console.error('Login failed:', error);
-                    const errorMessage = error || 'Login failed. Please check your credentials.';
-                    addNotification(`Login failed for ${data.email}. ${errorMessage}`);
+                    const errorMessage =
+                        error instanceof Error
+                            ? error.message
+                            : typeof error === 'string'
+                            ? error
+                            : 'Login failed. Please check your credentials.';
+
                     toast.current?.show({
                         severity: 'error',
                         summary: 'Login Error',
-                        detail: errorMessage as string,
+                        detail: errorMessage,
                         life: 3000
                     });
                     return;
                 }
             }
-
-            window.location.href = '/';
         } catch (globalError) {
             const errorMessage = globalError instanceof Error ? globalError.message : 'An unknown error occurred';
             addNotification(`An unexpected error occurred: ${errorMessage}`);

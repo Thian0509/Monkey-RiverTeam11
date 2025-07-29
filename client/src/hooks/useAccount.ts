@@ -86,6 +86,7 @@ export const useAccount = () => {
   
           const data = await res.json();
           setUser(data);
+          console.log('User data fetched:', data);
   
           setFormData((prev) => ({
             ...prev,

@@ -58,7 +58,14 @@ const ProfileSettings: React.FC = () => {
       });
       return;
     }
-    console.log('Password updated');
+    updateAccountData(formData);
+    console.log('Password updated', formData);
+    setFormData((prev) => ({
+      ...prev,
+      currentPassword: '',
+      password: '',
+      confirmPassword: '',
+    }));
     toast.current?.show({
       severity: 'success',
       summary: 'Success',

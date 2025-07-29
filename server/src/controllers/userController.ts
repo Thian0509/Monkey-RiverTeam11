@@ -58,6 +58,10 @@ export default {
     const userId = req.params.id;
     const updatedData = req.body;
     console.log("Updating user with ID:", userId, "Data:", updatedData);
+    if (updatedData.password) {
+      updatedData.passwordHash = await bcrypt.hash(updatedData.password, 10);
+      delete updatedData.password;
+    }
     try {
       const user = await User.findByIdAndUpdate(userId, updatedData, {
         new: true,
