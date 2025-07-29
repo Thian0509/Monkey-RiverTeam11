@@ -15,7 +15,10 @@ import { Slider } from 'primereact/slider'; // For riskLevel number input
 import { InputNumber } from 'primereact/inputnumber'; // For explicit number input for riskLevel
 
 import axios from 'axios';
+
+// Hooks
 import { useAuth } from '../hooks/useAuth';
+import { useNotifications } from '../hooks/useNotification';
 
 // Import your custom.geo.json (assuming it's in public/data)
 // If you put it in src/, you might need a different import method depending on your bundler (e.g., Vite/Webpack)
@@ -61,6 +64,7 @@ const TravelRisk: React.FC = () => {
     const [locationOptions, setLocationOptions] = useState<{ label: string; value: string }[]>([]); // For location dropdown
     const toast = useRef<Toast>(null);
     const { token } = useAuth();
+    const { addNotification } = useNotifications();
 
     const API_BASE_URL = 'http://localhost:5050/api/destinations';
 
@@ -130,7 +134,8 @@ const TravelRisk: React.FC = () => {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setDestinations(prev => [...prev, response.data]);
-            toast.current?.show({ severity: 'success', summary: 'Success', detail: 'Destination Added', life: 3000 });
+            addNotification(`Successfully added destination.`);
+            toast.current?.show({ severity: 'success', summary: 'Success', detail: 'Destination Added', life: 3000 }); 
             hideDialog();
         } catch (err: any) {
             console.error("Error adding destination:", err);
