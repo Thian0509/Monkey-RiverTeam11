@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { User, Mail, Lock, Phone, MapPin, Camera, Save, Eye, EyeOff } from 'lucide-react';
+//import { User, Mail, Lock, Phone, MapPin, Camera, Save, Eye, EyeOff } from 'lucide-react';
 
 const ProfileSettings = () => {
   const [formData, setFormData] = useState({
@@ -91,7 +91,7 @@ const ProfileSettings = () => {
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
-                <User className="inline-block w-4 h-4 mr-2" />
+                {/* <User className="inline-block w-4 h-4 mr-2" /> */}
                 Profile Information
               </button>
               <button
@@ -102,7 +102,7 @@ const ProfileSettings = () => {
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
-                <Lock className="inline-block w-4 h-4 mr-2" />
+                {/* <Lock className="inline-block w-4 h-4 mr-2" /> */}
                 Security
               </button>
             </nav>
@@ -121,7 +121,7 @@ const ProfileSettings = () => {
                       className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg"
                     />
                     <label className="absolute bottom-0 right-0 bg-blue-600 rounded-full p-2 cursor-pointer hover:bg-blue-700 transition-colors shadow-lg">
-                      <Camera className="w-4 h-4 text-white" />
+                      {/* <Camera className="w-4 h-4 text-white" /> */}
                       <input
                         type="file"
                         accept="image/*"
@@ -143,7 +143,7 @@ const ProfileSettings = () => {
                       First Name
                     </label>
                     <div className="relative">
-                      <User className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                      {/* <User className="absolute left-3 top-3 w-5 h-5 text-gray-400" /> */}
                       <input
                         type="text"
                         name="firstName"
@@ -160,7 +160,7 @@ const ProfileSettings = () => {
                       Last Name
                     </label>
                     <div className="relative">
-                      <User className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                      {/* <User className="absolute left-3 top-3 w-5 h-5 text-gray-400" /> */}
                       <input
                         type="text"
                         name="lastName"
@@ -177,7 +177,7 @@ const ProfileSettings = () => {
                       Email Address
                     </label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                      {/* <Mail className="absolute left-3 top-3 w-5 h-5 text-gray-400" /> */}
                       <input
                         type="email"
                         name="email"
@@ -194,7 +194,7 @@ const ProfileSettings = () => {
                       Phone Number
                     </label>
                     <div className="relative">
-                      <Phone className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                      {/* <Phone className="absolute left-3 top-3 w-5 h-5 text-gray-400" /> */}
                       <input
                         type="tel"
                         name="phone"
@@ -244,7 +244,7 @@ const ProfileSettings = () => {
                     onClick={handleSubmit}
                     className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-200 flex items-center space-x-2 shadow-lg"
                   >
-                    <Save className="w-5 h-5" />
+                    {/* <Save className="w-5 h-5" /> */}
                     <span>Save Changes</span>
                   </button>
                 </div>
@@ -265,7 +265,7 @@ const ProfileSettings = () => {
                         Current Password
                       </label>
                       <div className="relative">
-                        <Lock className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                        {/* <Lock className="absolute left-3 top-3 w-5 h-5 text-gray-400" /> */}
                         <input
                           type={showPasswords.current ? 'text' : 'password'}
                           name="currentPassword"
@@ -289,7 +289,7 @@ const ProfileSettings = () => {
                         New Password
                       </label>
                       <div className="relative">
-                        <Lock className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                        {/* <Lock className="absolute left-3 top-3 w-5 h-5 text-gray-400" /> */}
                         <input
                           type={showPasswords.new ? 'text' : 'password'}
                           name="newPassword"
@@ -313,7 +313,7 @@ const ProfileSettings = () => {
                         Confirm New Password
                       </label>
                       <div className="relative">
-                        <Lock className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                        {/* <Lock className="absolute left-3 top-3 w-5 h-5 text-gray-400" /> */}
                         <input
                           type={showPasswords.confirm ? 'text' : 'password'}
                           name="confirmPassword"
@@ -340,7 +340,7 @@ const ProfileSettings = () => {
                     onClick={handlePasswordSubmit}
                     className="bg-gradient-to-r from-green-600 to-teal-600 text-white px-8 py-3 rounded-lg font-medium hover:from-green-700 hover:to-teal-700 transition-all duration-200 flex items-center space-x-2 shadow-lg"
                   >
-                    <Lock className="w-5 h-5" />
+                    {/* <Lock className="w-5 h-5" /> */}
                     <span>Update Password</span>
                   </button>
                 </div>
