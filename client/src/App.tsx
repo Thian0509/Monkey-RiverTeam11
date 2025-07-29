@@ -7,7 +7,7 @@ import TravelRisk from './pages/TravelRisk';
 import Notifications from './pages/Notifications'; // Assuming this is the component that *displays* notifications
 import ProfileSettings from './pages/ProfileSettings';
 import Authenticate from './pages/Authenticate';
-
+import About from './pages/About';
 
 // Import the NotificationProvider from your context file
 import { NotificationProvider } from './context/NotificationContext';
@@ -35,6 +35,7 @@ function App() {
               <Route path="/travelrisk" element={<TravelRisk />} />
               <Route path="/notifications" element={<Notifications />} />
               <Route path="/account" element={<ProfileSettings />} />
+              <Route path="/about" element={<About />} />
               {/* Add other routes that should have the layout here */}
             </Routes>
           </Layout>

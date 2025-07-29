@@ -20,6 +20,10 @@ const navBarItems = [
     label: 'Account',
     icon: 'pi pi-user',
     link: '/account'
+  },{
+    label: 'About',
+    icon: 'pi pi-info-circle',
+    link: '/about'
   }
 ]
 
