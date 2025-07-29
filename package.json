@@ -1,0 +1,6 @@
+{
+  "name": "monkeyriverteam11",
+  "scripts": {
+    "start": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\""
+  }
+}
