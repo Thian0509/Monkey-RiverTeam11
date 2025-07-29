@@ -1,26 +1,41 @@
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import './index.css'
-import { AuthForm } from './components/AuthForm';
+
+import Layout from "./Layout";
+
 import Home from './pages/Home';
+import TravelRisk from './pages/TravelRisk';
+import Notifications from './pages/Notifications';
+import Account from './pages/Account';
+
+import { AuthForm } from './components/AuthForm';
         
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
-import 'primeflex/primeflex.css';
-import Notifications from './pages/Notifications';
 
 
 function App() {
+  const noLayoutRoutes = ['/login', '/register']
+
+  const isLayoutVisible = !noLayoutRoutes.includes(location.pathname)
+
   return (
-    <div className="App">
-      <BrowserRouter>
+    <BrowserRouter>
+      {isLayoutVisible ? (
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/travelrisk" element={<TravelRisk />} />
+            <Route path="/notifications" element={<Notifications />} />
+            <Route path="/account" element={<Account />} />
+          </Routes>
+        </Layout>
+      ) : (
         <Routes>
-          <Route path="/auth" element={<AuthForm />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/notifications" element={<Notifications />} />
+          <Route path="/login" element={<AuthForm />} />
         </Routes>
-      </BrowserRouter>
-    </div>
+      )}
+    </BrowserRouter>
   );
 }
 

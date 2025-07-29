@@ -5,7 +5,6 @@ import { MapChart } from 'echarts/charts'
 import { TooltipComponent, VisualMapComponent } from 'echarts/components'
 import { CanvasRenderer } from 'echarts/renderers'
 
-// Register components globally
 echarts.use([MapChart, TooltipComponent, VisualMapComponent, CanvasRenderer])
 
 const WorldRiskMap = () => {
@@ -14,7 +13,6 @@ const WorldRiskMap = () => {
   useEffect(() => {
     const chart = echarts.init(chartRef.current)
 
-    // Fetch GeoJSON and render chart
     fetch('/custom.geo.json')
       .then((res) => res.json())
       .then((geoJson) => {
@@ -32,10 +30,9 @@ const WorldRiskMap = () => {
             min: 0,
             max: 100,
             left: 'left',
-            bottom: '10%',
             text: ['High Risk', 'Low Risk'],
             inRange: {
-              color: ['#d2f5f5', '#f5222d']
+              color: ['#00c951', '#fb2c36']
             },
             calculable: true
           },
@@ -61,13 +58,12 @@ const WorldRiskMap = () => {
         })
       })
 
-    // Cleanup
     return () => {
       chart.dispose()
     }
   }, [])
 
-  return <div ref={chartRef} className="w-screen h-screen" />
+  return <div ref={chartRef} className="w-full h-full max-w-screen overflow-hidden" />
 }
 
 export default WorldRiskMap

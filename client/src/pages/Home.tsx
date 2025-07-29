@@ -1,11 +1,18 @@
 // import { useAuth } from '../hooks/useAuth';
-// import WorldRiskMap from '../components/WorldRiskMap';
+// import { useState } from 'react';
+import WorldRiskMap from '../components/WorldRiskMap';
+// import Loading from '../components/Loading';
 
 function Home() {
   // const { user } = useAuth();
+  // const [loading, setLoading] = useState(true);
+
+  // if (loading) {
+  //   return <Loading />;
+  // }
 
   return (
-    <div className="bg-red-500 w-screen h-screen">
+    <div className="w-screen h-screen bg-white">
     {/* //   <h1>Welcome to the Home Page</h1>
     //   {user ? (
     //     <p>Hello, {user.email}!</p>
@@ -15,8 +22,7 @@ function Home() {
     //       <a href="/auth">Login</a>
     //     </div>
     //   )} */}
-      {/* <WorldRiskMap /> */}
-      <h1 className="text-xl text-center pt-20">Welcome to the Home Page</h1>
+      <WorldRiskMap />
     </div>
   );
 };
