@@ -5,7 +5,7 @@ import Layout from "./Layout";
 import Home from './pages/Home';
 import TravelRisk from './pages/TravelRisk';
 import Notifications from './pages/Notifications';
-import Account from './pages/Account';
+import ProfileSettings from './pages/ProfileSettings';
 
 import { AuthForm } from './components/AuthForm';
 
@@ -27,7 +27,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/travelrisk" element={<TravelRisk />} />
             <Route path="/notifications" element={<Notifications />} />
-            <Route path="/account" element={<Account />} />
+            <Route path="/account" element={<ProfileSettings />} />
           </Routes>
         </Layout>
       ) : (
