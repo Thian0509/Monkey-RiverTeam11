@@ -9,7 +9,12 @@ import ProfileSettings from './pages/Account';
 import Authenticate from './pages/Authenticate';
 import About from './pages/About';
 
-import { NotificationProvider } from './context/NotificationContext';
+// IMPORT THE AUTH PROVIDER
+import { AuthProvider } from './AuthProvider'; // Make sure this path is correct
+
+// IMPORT THE BACKEND-DRIVEN NOTIFICATION PROVIDER
+// This import must point to the file you renamed to useNotification.tsx
+import { NotificationProvider } from './hooks/useNotification'; 
 
 import 'primereact/resources/themes/tailwind-light/theme.css';
 import 'primereact/resources/primereact.min.css';
@@ -44,11 +49,17 @@ function App() {
 
 
   return (
-    <NotificationProvider>
-      <BrowserRouter>
-        <CurrentLocation />
-      </BrowserRouter>
-    </NotificationProvider>
+    // STEP 1: Wrap your entire application with AuthProvider first.
+    // The NotificationProvider (backend-driven) uses the authentication token,
+    // so AuthProvider must be higher in the component tree.
+    <AuthProvider>
+      {/* STEP 2: Wrap with the backend-driven NotificationProvider */}
+      <NotificationProvider>
+        <BrowserRouter>
+          <CurrentLocation />
+        </BrowserRouter>
+      </NotificationProvider>
+    </AuthProvider>
   );
 }
 

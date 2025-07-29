@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 interface DecodedToken {
-  userId: string;
+  userId: string; // This is the key that will be available on req.user
   // Add other properties if your token includes them
 }
 
@@ -24,7 +24,7 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
         return res.status(500).json({ message: 'Server configuration error: JWT secret missing.' });
     }
     const decoded = jwt.verify(token, secret) as DecodedToken;
-    (req as any).user = decoded; // Attach user info to request
+    (req as any).user = decoded; // Attach user info to request, specifically decoded.userId
     next();
   } catch (error) {
     console.error('JWT verification error:', error);
