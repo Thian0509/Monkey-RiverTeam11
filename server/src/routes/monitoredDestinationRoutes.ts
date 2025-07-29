@@ -1,3 +1,4 @@
+// monitoredDestinationRoutes.ts (No changes needed, keeping as is)
 import express from "express";
 import {
   createDestination,
@@ -6,16 +7,16 @@ import {
   updateDestination,
   deleteDestination,
 } from "../controllers/monitoredDestinationController";
-import { verifyToken } from "../middleware/auth";
+import { verifyToken } from "../middleware/auth"; // Your existing auth middleware
 
 const router = express.Router();
 
-router.use(verifyToken);
+router.use(verifyToken); // This applies authentication to all routes below
 
 router.post("/", createDestination);
 router.get("/", getAllDestinations);
-router.get("/:id", getDestinationById);
-router.put("/:id", updateDestination);
-router.delete("/:id", deleteDestination);
+router.get("/:id", getDestinationById); // :id will be MongoDB's _id
+router.put("/:id", updateDestination);   // :id will be MongoDB's _id
+router.delete("/:id", deleteDestination); // :id will be MongoDB's _id
 
 export default router;

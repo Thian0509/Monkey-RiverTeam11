@@ -1,8 +1,9 @@
+// auth.ts (No changes needed, keeping as is)
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv'; // Make sure this is imported
+import dotenv from 'dotenv';
 
-dotenv.config(); // Make sure this is called early in this file or index.ts
+dotenv.config();
 
 interface DecodedToken {
   userId: string;
@@ -17,7 +18,7 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
   }
 
   try {
-    const secret = process.env.JWT_SECRET; // This should be the same as in .env
+    const secret = process.env.JWT_SECRET;
     if (!secret) {
         console.error('JWT_SECRET is not defined in environment variables.');
         return res.status(500).json({ message: 'Server configuration error: JWT secret missing.' });
@@ -26,7 +27,7 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
     (req as any).user = decoded; // Attach user info to request
     next();
   } catch (error) {
-    console.error('JWT verification error:', error); // Log the actual error
+    console.error('JWT verification error:', error);
     if (error instanceof jwt.TokenExpiredError) {
       return res.status(401).json({ message: 'Token expired' });
     }

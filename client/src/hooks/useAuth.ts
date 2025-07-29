@@ -1,5 +1,6 @@
+// client/src/hooks/useAuth.ts (No changes needed, keeping as is)
 import { createContext, useContext } from "react";
-import type { User } from "../AuthProvider";
+import type { User } from "../AuthProvider"; // Ensure this path is correct for your AuthProvider
 
 interface AuthContextType {
   token: string | null;

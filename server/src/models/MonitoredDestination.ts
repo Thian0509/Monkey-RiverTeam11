@@ -1,15 +1,24 @@
-import mongoose, { Document, Schema } from "mongoose";
+// src/models/MonitoredDestination.ts
+import mongoose, { Document, Schema, Model } from "mongoose";
 
-export interface IMonitoredDestination extends Document {
+export interface IMonitoredDestinationBase {
   location: string;
-  riskLevel: number;
+  riskLevel: number; // This will now be a number from 1 to 100
   lastChecked: Date;
 }
 
+export interface IMonitoredDestination extends IMonitoredDestinationBase, Document {}
+
 const MonitoredDestinationSchema: Schema = new Schema(
   {
-    location: { type: String, required: true, trim: true },
-    riskLevel: { type: Number, required: true, default: 0 },
+    location: { type: String, required: true, trim: true, unique: true },
+    riskLevel: {
+      type: Number,
+      required: true,
+      default: 50, // Default to a middle value, e.g., 50
+      min: 1,    // Minimum risk level
+      max: 100,  // Maximum risk level
+    },
     lastChecked: { type: Date, required: true, default: Date.now },
   },
   {
@@ -17,8 +26,10 @@ const MonitoredDestinationSchema: Schema = new Schema(
   }
 );
 
-export default mongoose.model<IMonitoredDestination>(
+const MonitoredDestination: Model<IMonitoredDestination> = mongoose.model<IMonitoredDestination>(
   "MonitoredDestination",
   MonitoredDestinationSchema,
   "monitoredDestinations"
 );
+
+export default MonitoredDestination;
