@@ -11,7 +11,7 @@ import { verifyToken } from "../middleware/auth"; // Your existing auth middlewa
 
 const router = express.Router();
 
-router.use(verifyToken); // This applies authentication to all routes below
+router.use(verifyToken);
 
 router.post("/", createDestination);
 router.get("/", getAllDestinations);

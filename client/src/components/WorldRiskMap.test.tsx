@@ -110,29 +110,10 @@ describe('WorldRiskMap Component', () => {
                 show: true
               }
             },
-            data: [
-              { name: 'South Africa', value: 80 },
-              { name: 'Nigeria', value: 65 },
-              { name: 'United States', value: 30 },
-              { name: 'Russia', value: 90 }
-            ]
+            data: [] // Initially empty, will be populated by useMap hook
           }
-        ]
+        ],
       });
-    });
-  });
-
-  it('includes sample risk data for countries', async () => {
-    render(<WorldRiskMap />);
-    
-    await waitFor(() => {
-      const setOptionCall = mockChart.setOption.mock.calls[0][0];
-      const seriesData = setOptionCall.series[0].data;
-      
-      expect(seriesData).toContainEqual({ name: 'South Africa', value: 80 });
-      expect(seriesData).toContainEqual({ name: 'Nigeria', value: 65 });
-      expect(seriesData).toContainEqual({ name: 'United States', value: 30 });
-      expect(seriesData).toContainEqual({ name: 'Russia', value: 90 });
     });
   });
 

@@ -14,14 +14,15 @@
   "dependencies": {
     "@clerk/clerk-react": "^5.37.0",
     "@tailwindcss/vite": "^4.1.11",
+    "axios": "^1.11.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
+    "echarts": "^5.6.0",
     "primeicons": "^7.0.0",
     "primereact": "^10.9.6",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "tailwindcss": "^4.1.11",
-    "echarts": "^5.6.0"
+    "tailwindcss": "^4.1.11"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.28.0",

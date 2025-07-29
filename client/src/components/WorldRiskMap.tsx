@@ -1,14 +1,30 @@
 // src/components/WorldRiskMap.jsx
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import * as echarts from 'echarts/core'
 import { MapChart } from 'echarts/charts'
 import { TooltipComponent, VisualMapComponent } from 'echarts/components'
 import { CanvasRenderer } from 'echarts/renderers'
+import { useMap } from '../hooks/useMap'
 
 echarts.use([MapChart, TooltipComponent, VisualMapComponent, CanvasRenderer])
 
+interface CountryRiskData {
+  name: string;
+  value: number;
+}
+
 const WorldRiskMap = () => {
   const chartRef = useRef(null)
+  const { mapData } = useMap()
+
+  const countryData: CountryRiskData[] = useMemo(() => {
+    return mapData && Array.isArray(mapData) ?
+      mapData.map((country: any) => ({
+        name: country.location,
+        value: country.riskLevel
+      })) :
+      []
+  }, [mapData])
 
   useEffect(() => {
     const chart = echarts.init(chartRef.current)
@@ -47,12 +63,7 @@ const WorldRiskMap = () => {
                   show: true
                 }
               },
-              data: [
-                { name: 'South Africa', value: 80 },
-                { name: 'Nigeria', value: 65 },
-                { name: 'United States', value: 30 },
-                { name: 'Russia', value: 90 }
-              ]
+              data: countryData
             }
           ]
         })
@@ -61,7 +72,7 @@ const WorldRiskMap = () => {
     return () => {
       chart.dispose()
     }
-  }, [])
+  }, [mapData, countryData])
 
   return <div ref={chartRef} className="w-full h-full max-w-screen overflow-hidden" />
 }
