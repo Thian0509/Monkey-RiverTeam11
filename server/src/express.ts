@@ -1,11 +1,11 @@
-import express from 'express'
-import cors from 'cors'
+import express from "express";
+import cors from "cors";
 
 class Express {
   private static instance: Express;
   public app!: express.Express;
-  
-constructor() {
+
+  constructor() {
     if (Express.instance) {
       return Express.instance;
     }

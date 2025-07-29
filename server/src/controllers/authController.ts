@@ -1,24 +1,25 @@
-import jwt, { SignOptions } from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
-import User from '../models/User';
-import { Request, Response } from 'express';
-import dotenv from 'dotenv';
+import jwt, { SignOptions } from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import User from "../models/User";
+import { Request, Response } from "express";
+import dotenv from "dotenv";
 
 dotenv.config();
 
-const expiresIn: SignOptions['expiresIn'] = process.env.JWT_EXPIRES as SignOptions['expiresIn'] || '1h';
+const expiresIn: SignOptions["expiresIn"] =
+  (process.env.JWT_EXPIRES as SignOptions["expiresIn"]) || "1h";
 
 export const loginUser = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
   if (!user) {
-    return res.status(404).json({ message: 'User not found' });
+    return res.status(404).json({ message: "User not found" });
   }
 
   const valid = await bcrypt.compare(password, user.passwordHash);
   if (!valid) {
-    return res.status(401).json({ message: 'Invalid credentials' });
+    return res.status(401).json({ message: "Invalid credentials" });
   }
 
   const payload = { userId: user._id };
@@ -37,7 +38,7 @@ export const registerUser = async (req: Request, res: Response) => {
 
   const existing = await User.findOne({ email });
   if (existing) {
-    return res.status(400).json({ message: 'Email already exists' });
+    return res.status(400).json({ message: "Email already exists" });
   }
 
   const passwordHash = await bcrypt.hash(password, 10);
