@@ -1,10 +1,6 @@
 import Express from "./express"
-const app = new Express().app;
 
-app.get('/api/hello', (_req, res) => {
-  console.log('✅ /api/hello called')
-  res.json({ message: 'Hello from TypeScript Express backend!' })
-})
+const app = new Express().app;
 
 app.get('/api/db-health', (_req, res) => {
   console.log('✅ /api/db-health called')
@@ -15,6 +11,8 @@ app.get('/api/db-health', (_req, res) => {
     res.status(500).json({ status: 'Database is down' });
   }
 });
+
+app.use('/api/users', require('./routes/users'));
 
 const PORT = process.env.PORT || 5050
 app.listen(PORT, () => {
