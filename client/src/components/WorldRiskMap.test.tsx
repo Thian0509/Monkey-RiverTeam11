@@ -1,9 +1,18 @@
-import React from 'react';
 import { render, waitFor } from '@testing-library/react';
 import { describe, it, vi, beforeEach, afterEach } from 'vitest';
 import * as echarts from 'echarts/core';
 
+vi.mock('../hooks/useMap', () => ({
+  useMap: () => ({
+    mapData: [
+      { location: 'South Africa', riskLevel: 75 },
+      { location: 'United States', riskLevel: 50 },
+    ],
+  }),
+}));
+
 import WorldRiskMap from './WorldRiskMap';
+
 
 // Mock echarts
 vi.mock('echarts/core', () => ({
@@ -110,7 +119,10 @@ describe('WorldRiskMap Component', () => {
                 show: true
               }
             },
-            data: [] // Initially empty, will be populated by useMap hook
+            data: [
+              { name: 'South Africa', value: 75 },
+              { name: 'United States', value: 50 }
+            ]
           }
         ],
       });
