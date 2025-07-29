@@ -2,6 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "main": "index.js",
+  "module": "CommonJS",
   "scripts": {
     "dev": "ts-node-dev src/index.ts",
     "build": "tsc",
