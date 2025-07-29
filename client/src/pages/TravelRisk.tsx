@@ -329,7 +329,7 @@ const TravelRisk: React.FC = () => {
                     <div className="flex items-center gap-3">
                         <i className={`pi ${selectedDestination ? 'pi-pencil' : 'pi-plus'} text-2xl text-blue-600`}></i>
                         <span className="text-xl font-semibold">
-                            {selectedDestination ? "Edit Destination" : "New Destination"}
+                            {selectedDestination ? "Edit Destination" : "Create Destination"}
                         </span>
                     </div>
                 }
