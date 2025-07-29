@@ -1,5 +1,5 @@
 - name: Upload coverage reports to Codecov
-    uses: codecov/codecov-action@v5
-    with:
-      token: ${{ secrets.CODECOV_TOKEN }}
-      slug: Thian0509/Monkey-RiverTeam11
+  uses: codecov/codecov-action@v5
+  with:
+    token: ${{ secrets.CODECOV_TOKEN }}
+    slug: Thian0509/Monkey-RiverTeam11
