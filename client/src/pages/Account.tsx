@@ -162,7 +162,7 @@ const ProfileSettings: React.FC = () => {
           <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-6">
             <h1 className="text-3xl font-bold text-white">Profile Settings</h1>
             <p className="text-blue-100 mt-2">
-           Welcome,{user?.name} Manage your account settings and preferences
+              Welcome, {user?.name}! Manage your account settings and preferences
             </p>
           </div>
 
