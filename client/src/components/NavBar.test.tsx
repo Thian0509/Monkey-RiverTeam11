@@ -88,7 +88,7 @@ describe('NavBar Component', () => {
   it('has the correct number of navigation items', () => {
     render(<NavBar />);
     const links = screen.getAllByRole('link');
-    expect(links).toHaveLength(4);
+    expect(links).toHaveLength(5);
   });
 
   it('maintains proper semantic structure with nav element', () => {
