@@ -1,9 +1,6 @@
 {
-  "name": "fullstack-ts-app",
+  "name": "monkeyriverteam11",
   "scripts": {
-    "dev": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\""
-  },
-  "devDependencies": {
-    "concurrently": "^9.2.0"
+    "start": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\""
   }
 }
