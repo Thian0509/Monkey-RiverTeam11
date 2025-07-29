@@ -1,9 +1,7 @@
-import React from 'react';
 import { Button } from 'primereact/button';
 import { useNotifications } from '../hooks/useNotification';
 
-export const Notifications: React.FC = () => {
-  // Use the custom hook to get notifications and the functions to manipulate them
+export default function Notifications() {
   const { notifications, removeNotification, markAsRead, markAllAsRead } = useNotifications();
 
   return (
@@ -61,5 +59,3 @@ export const Notifications: React.FC = () => {
     </div>
   );
 };
-
-export default Notifications;
