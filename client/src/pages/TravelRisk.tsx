@@ -9,241 +9,42 @@ import { Calendar } from 'primereact/calendar';
 import { ConfirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import { Slider } from 'primereact/slider'; // For riskLevel number input
-import { InputNumber } from 'primereact/inputnumber'; // For explicit number input for riskLevel
+import { Slider } from 'primereact/slider';
+import { InputNumber } from 'primereact/inputnumber';
+import { Tag } from 'primereact/tag';
+import { Badge } from 'primereact/badge';
+import { InputText } from 'primereact/inputtext';
+import { MultiSelect } from 'primereact/multiselect';
 
-import axios from 'axios';
-import { useAuth } from '../hooks/useAuth';
-
-// Import your custom.geo.json (assuming it's in public/data)
-// If you put it in src/, you might need a different import method depending on your bundler (e.g., Vite/Webpack)
-// For simplicity, we'll fetch it as a static asset.
-// const geoJsonData = require('../../public/data/custom.geo.json'); // Example if using CommonJS and located differently
-// Or, if your bundler supports direct JSON import for files in src/:
-// import geoJsonData from '../data/custom.geo.json';
-
-// Define the type for a Feature in your GeoJSON
-interface GeoJsonFeature {
-    type: "Feature";
-    properties: {
-        name: string;
-        // Add other properties you might care about from custom.geo.json
-        // For example, if you want to store country codes etc.
-        iso_a2?: string;
-        name_long?: string;
-    };
-    geometry: any; // Can be more specific if needed
-}
-
-// Define the type for a Monitored Destination
-interface Destination {
-    _id?: string;
-    location: string;
-    riskLevel: number; // Now a number from 1 to 100
-    lastChecked: string;
-}
+import { useTravelRisk, type Destination } from '../hooks/useTravelRisk';
 
 const TravelRisk: React.FC = () => {
-    const [destinations, setDestinations] = useState<Destination[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [globalError, setGlobalError] = useState<string | null>(null);
-    const [displayDialog, setDisplayDialog] = useState<boolean>(false);
-    const [selectedDestination, setSelectedDestination] = useState<Destination | null>(null);
-    const [newDestination, setNewDestination] = useState<Destination>({
-        location: '',
-        riskLevel: 50, // Default to 50 (middle of 1-100)
-        lastChecked: new Date().toISOString().split('T')[0]
-    });
-    const [submitted, setSubmitted] = useState<boolean>(false);
+    const {
+        destinations,
+        loading,
+        globalError,
+        displayDialog,
+        selectedDestination,
+        selectedCountries,
+        searchQuery,
+        newDestination,
+        submitted,
+        locationOptions,
+        toast,
+        openNew,
+        hideDialog,
+        saveDestination,
+        editDestination,
+        deleteDestination,
+        onCellEditComplete,
+        setSelectedDestination,
+        setNewDestination,
+        handleSearch,
+        handleCountrySelection,
+        clearFilters,
+        requestCountryUpdate
+    } = useTravelRisk();
 
-    const [locationOptions, setLocationOptions] = useState<{ label: string; value: string }[]>([]); // For location dropdown
-    const toast = useRef<Toast>(null);
-    const { token } = useAuth();
-
-    const API_BASE_URL = 'http://localhost:5050/api/destinations';
-
-    // --- Data Loading (GeoJSON) ---
-    useEffect(() => {
-        const loadGeoJsonData = async () => {
-            try {
-                // Fetch from public folder. Adjust path if your custom.geo.json is elsewhere.
-                const response = await fetch('/custom.geo.json');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const data = await response.json();
-                const options = data.features.map((feature: GeoJsonFeature) => ({
-                    label: feature.properties.name_long || feature.properties.name, // Use long name if available, else short
-                    value: feature.properties.name_long || feature.properties.name,
-                }));
-                setLocationOptions(options);
-            } catch (error) {
-                console.error("Failed to load custom.geo.json:", error);
-                toast.current?.show({
-                    severity: 'error',
-                    summary: 'Error',
-                    detail: 'Failed to load location data for dropdown.',
-                    life: 5000
-                });
-            }
-        };
-
-        loadGeoJsonData();
-    }, []); // Run once on component mount
-
-    // --- API CALLS (Unchanged from previous version for core logic, just riskLevel type) ---
-
-    const fetchDestinations = async () => {
-        setLoading(true);
-        setGlobalError(null);
-        try {
-            if (!token) {
-                setGlobalError('Not authenticated. Please log in.');
-                setLoading(false);
-                return;
-            }
-            const response = await axios.get<Destination[]>(API_BASE_URL, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            setDestinations(response.data);
-        } catch (err: any) {
-            console.error("Error fetching destinations:", err);
-            const errorMessage = err.response?.data?.message || 'Failed to fetch destinations';
-            setGlobalError(errorMessage);
-            toast.current?.show({ severity: 'error', summary: 'Error', detail: errorMessage, life: 5000 });
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const addDestination = async () => {
-        setSubmitted(true);
-        if (!newDestination.location || !newDestination.riskLevel || newDestination.riskLevel < 1 || newDestination.riskLevel > 100) {
-            return;
-        }
-
-        try {
-            if (!token) throw new Error('Not authenticated.');
-            const response = await axios.post<Destination>(API_BASE_URL, newDestination, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            setDestinations(prev => [...prev, response.data]);
-            toast.current?.show({ severity: 'success', summary: 'Success', detail: 'Destination Added', life: 3000 });
-            hideDialog();
-        } catch (err: any) {
-            console.error("Error adding destination:", err);
-            toast.current?.show({
-                severity: 'error',
-                summary: 'Error',
-                detail: err.response?.data?.message || 'Failed to add destination',
-                life: 5000
-            });
-        }
-    };
-
-    const updateDestination = async (destinationToUpdate: Destination) => {
-        if (!destinationToUpdate._id || !destinationToUpdate.location || destinationToUpdate.riskLevel === undefined || destinationToUpdate.riskLevel < 1 || destinationToUpdate.riskLevel > 100) {
-            toast.current?.show({ severity: 'error', summary: 'Validation Error', detail: 'Location and Risk Level (1-100) cannot be empty/invalid.', life: 3000 });
-            return;
-        }
-
-        try {
-            if (!token) throw new Error('Not authenticated.');
-            const response = await axios.put<Destination>(`${API_BASE_URL}/${destinationToUpdate._id}`, destinationToUpdate, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            setDestinations(prev =>
-                prev.map(dest => (dest._id === destinationToUpdate._id ? response.data : dest))
-            );
-            toast.current?.show({ severity: 'success', summary: 'Success', detail: 'Destination Updated', life: 3000 });
-            hideDialog();
-        } catch (err: any) {
-            console.error("Error updating destination:", err);
-            toast.current?.show({
-                severity: 'error',
-                summary: 'Error',
-                detail: err.response?.data?.message || 'Failed to update destination',
-                life: 5000
-            });
-        }
-    };
-
-    const deleteDestination = async (_id: string) => {
-        confirmDialog({
-            message: 'Are you sure you want to delete this destination?',
-            header: 'Confirmation',
-            icon: 'pi pi-exclamation-triangle',
-            accept: async () => {
-                try {
-                    if (!token) throw new Error('Not authenticated.');
-                    await axios.delete(`${API_BASE_URL}/${_id}`, {
-                        headers: { Authorization: `Bearer ${token}` },
-                    });
-                    setDestinations(prev => prev.filter(dest => dest._id !== _id));
-                    toast.current?.show({ severity: 'success', summary: 'Success', detail: 'Destination Deleted', life: 3000 });
-                } catch (err: any) {
-                    console.error("Error deleting destination:", err);
-                    toast.current?.show({
-                        severity: 'error',
-                        summary: 'Error',
-                        detail: err.response?.data?.message || 'Failed to delete destination',
-                        life: 5000
-                    });
-                }
-            },
-            reject: () => {}
-        });
-    };
-
-    useEffect(() => {
-        if (token) {
-            fetchDestinations();
-        } else {
-            setLoading(false);
-            setGlobalError('Please log in to view and manage destinations.');
-            setDestinations([]);
-        }
-    }, [token]);
-
-    // --- UI Logic and Primereact Specifics ---
-
-    const openNew = () => {
-        setNewDestination({
-            location: '',
-            riskLevel: 50,
-            lastChecked: new Date().toISOString().split('T')[0]
-        });
-        setSelectedDestination(null);
-        setSubmitted(false);
-        setDisplayDialog(true);
-    };
-
-    const hideDialog = () => {
-        setDisplayDialog(false);
-        setSelectedDestination(null);
-        setSubmitted(false);
-        setNewDestination({
-            location: '',
-            riskLevel: 50,
-            lastChecked: new Date().toISOString().split('T')[0]
-        });
-    };
-
-    const saveDestination = () => {
-        if (selectedDestination) {
-            updateDestination(selectedDestination);
-        } else {
-            addDestination();
-        }
-    };
-
-    const editDestination = (destination: Destination) => {
-        setSelectedDestination({ ...destination });
-        setSubmitted(false);
-        setDisplayDialog(true);
-    };
-
-    // Primereact DataTable columns and editors
     const riskLevelEditor = (options: any) => {
         return (
             <div className="p-fluid">
