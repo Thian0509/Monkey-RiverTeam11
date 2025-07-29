@@ -48,5 +48,6 @@ Our focus was to provide the user with a clean and easy-to-use interface. The UI
 ## Meet the Team
 
 - Iwan de Jong ([LinkedIn](https://linkedin.com/in/iwandejong), [GitHub](https://github.com/iwandejong))
+- Thian du Plessis ([LinkedIn](www.linkedin.com/in/thian-du-plessis), [GitHub](https://github.com/Thian0509))
 
 
