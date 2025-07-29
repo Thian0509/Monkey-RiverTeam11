@@ -22,12 +22,18 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, [token]);
 
   const login = async (email: string, password: string) => {
-    const res = await fetch("/api/login", {
+    console.log("Logging in with email:", email);
+    const res = await fetch("/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password })
     });
     const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.message || "Login failed");
+    }
+
     if (data.token) {
       localStorage.setItem("token", data.token);
       setToken(data.token);
@@ -40,8 +46,27 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setUser(null);
   };
 
+  const register = async (email: string, password: string) => {
+    const res = await fetch("/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.message || "Registration failed");
+    }
+
+    if (data.token) {
+      localStorage.setItem("token", data.token);
+      setToken(data.token);
+    }
+    return data;
+  };
+
   return (
-    <AuthContext.Provider value={{ token, user, login, logout }}>
+    <AuthContext.Provider value={{ token, user, login, logout, register }}>
       {children}
     </AuthContext.Provider>
   );

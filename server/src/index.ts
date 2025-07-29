@@ -3,15 +3,16 @@ import dotenv from "dotenv";
 import connectDB from "./database";
 import Express from "./express";
 import mongoose from "mongoose";
+import { errorHandler } from "./middleware/errorHandler";
 
 dotenv.config();
 
 connectDB();
 
 const app = new Express().app;
+app.use(errorHandler);
 
 app.get("/api/db-health", (_req, res) => {
-  console.log("/api/db-health called");
   const dbHealthy = mongoose.connection.readyState === 1;
   if (dbHealthy) {
     res.status(200).json({
@@ -35,9 +36,6 @@ app.use("/api/users", usersRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/destinations", monitoredDestinationRoutes);
 app.use('/api/alerts', alertRoutes);
-
-import { errorHandler } from "./middleware/errorHandler";
-app.use(errorHandler);
 
 const PORT = process.env.PORT || 5050;
 app.listen(PORT, () => {

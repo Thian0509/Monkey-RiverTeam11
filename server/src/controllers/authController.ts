@@ -6,9 +6,10 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const expiresIn: SignOptions["expiresIn"] =
-  (process.env.JWT_EXPIRES as SignOptions["expiresIn"]) || "1h";
+const expiresIn: SignOptions["expiresIn"] = (process.env.JWT_EXPIRES as SignOptions["expiresIn"]) || "1h";
 export const loginUser = async (req: Request, res: Response) => {
+  console.log("Login attempt with body:", req.body);
+
   const { email, password } = req.body;
   const user = await User.findOne({ email });
 

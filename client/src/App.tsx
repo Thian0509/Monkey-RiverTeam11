@@ -6,16 +6,15 @@ import Home from './pages/Home';
 import TravelRisk from './pages/TravelRisk';
 import Notifications from './pages/Notifications';
 import ProfileSettings from './pages/ProfileSettings';
-
-import { AuthForm } from './components/AuthForm';
+import Authenticate from './pages/Authenticate';
 
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
-import 'primeicons/primeicons.css';
+// import 'primeicons/primeicons.css';
 
 
 function App() {
-  const noLayoutRoutes = ['/login', '/register']
+  const noLayoutRoutes = ['/authenticate']
 
   const isLayoutVisible = !noLayoutRoutes.includes(location.pathname)
 
@@ -32,7 +31,7 @@ function App() {
         </Layout>
       ) : (
         <Routes>
-          <Route path="/login" element={<AuthForm />} />
+          <Route path="/authenticate" element={<Authenticate />} />
         </Routes>
       )}
     </BrowserRouter>
