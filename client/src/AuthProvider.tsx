@@ -17,7 +17,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   useEffect(() => {
     if (token) {
       setUser({ email: parseJwt(token).email });
-      console.log("User authenticated with token:", token);
     }
   }, [token]);
 
