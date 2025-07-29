@@ -1,23 +1,38 @@
-import jwt from "jsonwebtoken";
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv'; // Make sure this is imported
 
-interface RequestWithUser extends Request {
-  user?: any;
+dotenv.config(); // Make sure this is called early in this file or index.ts
+
+interface DecodedToken {
+  userId: string;
+  // Add other properties if your token includes them
 }
 
-export const verifyToken = (
-  req: RequestWithUser,
-  res: Response,
-  next: NextFunction
-) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) return res.status(401).json({ message: "No token provided" });
+export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
+  const token = req.header('Authorization')?.replace('Bearer ', '');
+
+  if (!token) {
+    return res.status(401).json({ message: 'No token provided' });
+  }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
-    req.user = decoded;
+    const secret = process.env.JWT_SECRET; // This should be the same as in .env
+    if (!secret) {
+        console.error('JWT_SECRET is not defined in environment variables.');
+        return res.status(500).json({ message: 'Server configuration error: JWT secret missing.' });
+    }
+    const decoded = jwt.verify(token, secret) as DecodedToken;
+    (req as any).user = decoded; // Attach user info to request
     next();
-  } catch {
-    res.status(403).json({ message: "Invalid or expired token" });
+  } catch (error) {
+    console.error('JWT verification error:', error); // Log the actual error
+    if (error instanceof jwt.TokenExpiredError) {
+      return res.status(401).json({ message: 'Token expired' });
+    }
+    if (error instanceof jwt.JsonWebTokenError) {
+      return res.status(401).json({ message: 'Invalid token' });
+    }
+    res.status(500).json({ message: 'Failed to authenticate token.' });
   }
 };
