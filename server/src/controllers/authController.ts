@@ -1,0 +1,34 @@
+import jwt from 'jsonwebtoken'
+import bcrypt from 'bcrypt'
+import User from '../models/User'
+import { Request, Response } from 'express'
+
+export const loginUser = async (req: Request, res: Response) => {
+  const { email, password } = req.body
+  const user = await User.findOne({ email })
+  if (!user) return res.status(404).json({ message: 'User not found' })
+
+  const valid = await bcrypt.compare(password, user.passwordHash)
+  if (!valid) return res.status(401).json({ message: 'Invalid credentials' })
+
+  const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET!, {
+    expiresIn: process.env.JWT_EXPIRES || '1h'
+  })
+
+  res.json({ token })
+}
+
+export const registerUser = async (req: Request, res: Response) => {
+  const { name, email, password } = req.body
+  const existing = await User.findOne({ email })
+  if (existing) return res.status(400).json({ message: 'Email already exists' })
+
+  const passwordHash = await bcrypt.hash(password, 10)
+  const newUser = await User.create({ name, email, passwordHash })
+
+  const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET!, {
+    expiresIn: process.env.JWT_EXPIRES || '1h'
+  })
+
+  res.status(201).json({ token })
+}
