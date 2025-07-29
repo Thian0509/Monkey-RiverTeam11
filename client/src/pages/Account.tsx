@@ -67,40 +67,44 @@ const ProfileSettings: React.FC = () => {
   useEffect(() => {
     async function fetchUser() {
       try {
-        const res = await fetch('/api/account', {
-          credentials: 'include',
+        const token = localStorage.getItem('token'); // or sessionStorage
+
+        const res = await fetch('/api/account/me', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
         });
+
         if (!res.ok) throw new Error('Failed to fetch user data');
+
         const data = await res.json();
         setUser(data);
+
+        // Update form data with user info once fetched
+        setFormData((prev) => ({
+          ...prev,
+          name: data.name || '',
+          email: data.email || '',
+          phone: data.phone || '',
+          location: data.location || '',
+          bio: data.bio || '',
+        }));
+
       } catch (err: unknown) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError('Unknown error');
-        }
+        if (err instanceof Error) setError(err.message);
+        else setError('Unknown error');
       } finally {
         setLoading(false);
       }
     }
+
     fetchUser();
   }, []);
-
-  useEffect(() => {
-    if (user) {
-      setFormData((prev) => ({
-        ...prev,
-        name: user.name,
-        email: user.email,
-      }));
-    }
-  }, [user]);
-
 
   if (loading) return <p>Loading account info...</p>;
   if (error) return <p>Error: {error}</p>;
 
- 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -158,7 +162,7 @@ const ProfileSettings: React.FC = () => {
           <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-6">
             <h1 className="text-3xl font-bold text-white">Profile Settings</h1>
             <p className="text-blue-100 mt-2">
-              Manage your account settings and preferences
+           Welcome,{user?.name} Manage your account settings and preferences
             </p>
           </div>
 

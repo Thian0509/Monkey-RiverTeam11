@@ -31,11 +31,14 @@ import usersRoutes from "./routes/users";
 import authRoutes from "./routes/authRoutes";
 import monitoredDestinationRoutes from "./routes/monitoredDestinationRoutes";
 import alertRoutes from './routes/alertRoutes';
+import accountRoutes from './routes/accountRoutes';
+
 
 app.use("/api/users", usersRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/destinations", monitoredDestinationRoutes);
-app.use('/api/alerts', alertRoutes);
+app.use("/api/alerts", alertRoutes);
+app.use("/api/account", accountRoutes); 
 
 const PORT = process.env.PORT || 5050;
 app.listen(PORT, () => {
