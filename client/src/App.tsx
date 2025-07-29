@@ -1,6 +1,5 @@
-import './App.css';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
-
+import './index.css'
 import { AuthForm } from './components/AuthForm';
 import Home from './pages/Home';
         

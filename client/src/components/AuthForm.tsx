@@ -1,6 +1,6 @@
-// src/components/AuthForm.tsx
 import React, { useState, useRef } from 'react';
 import { useForm, Controller } from 'react-hook-form';
+import type { FieldError } from 'react-hook-form';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { InputText } from 'primereact/inputtext';
@@ -9,12 +9,17 @@ import { Toast } from 'primereact/toast';
 import { classNames } from 'primereact/utils';
 import { FloatLabel } from 'primereact/floatlabel';
 
-export const AuthForm = () => {
-    const [isRegister, setIsRegister] = useState(false);
-    const toast = useRef(null);
+interface FormData {
+    email: string;
+    password: string;
+    confirmPassword: string;
+}
 
-    // UPDATED: Added 'reset' from useForm
-    const { control, handleSubmit, formState: { errors, isSubmitting }, watch, reset } = useForm({
+export const AuthForm: React.FC = () => {
+    const [isRegister, setIsRegister] = useState<boolean>(false);
+    const toast = useRef<Toast>(null);
+
+    const { control, handleSubmit, formState: { errors, isSubmitting }, watch, reset } = useForm<FormData>({
         defaultValues: {
             email: '',
             password: '',
@@ -24,12 +29,12 @@ export const AuthForm = () => {
 
     const password_watch = watch("password");
 
-    const getFormErrorMessage = (name) => {
-        return errors[name] && <small className="p-error">{errors[name].message}</small>
+    const getFormErrorMessage = (name: keyof FormData) => {
+        const error = errors[name] as FieldError | undefined;
+        return error && <small className="p-error">{error.message}</small>;
     };
 
-    // UPDATED: Made onSubmit async to handle API calls and added try/catch for errors
-    const onSubmit = async (data) => {
+    const onSubmit = async (data: FormData) => {
         try {
             console.log('Form data:', data);
 
@@ -42,7 +47,7 @@ export const AuthForm = () => {
             }
             // --- End Simulation ---
 
-            toast.current.show({
+            toast.current?.show({
                 severity: 'success',
                 summary: 'Success',
                 detail: isRegister ? 'Registration successful!' : 'Login successful!',
@@ -50,10 +55,11 @@ export const AuthForm = () => {
             });
         } catch (error) {
             // This block will run if the API call fails
-            toast.current.show({
+            const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+            toast.current?.show({
                 severity: 'error',
                 summary: 'Error',
-                detail: error.message || (isRegister ? 'Registration failed.' : 'Login failed.'),
+                detail: errorMessage || (isRegister ? 'Registration failed.' : 'Login failed.'),
                 life: 3000
             });
         }
@@ -73,10 +79,10 @@ export const AuthForm = () => {
             <Button
                 label={isRegister ? 'Already have an account? Login' : "Don't have an account? Register"}
                 className="p-button-text"
-                onClick={(e) => {
+                onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     e.preventDefault();
                     setIsRegister(!isRegister);
-                    reset(); // NEW: Reset form fields on toggle
+                    reset();
                 }}
             />
         </div>
@@ -86,7 +92,6 @@ export const AuthForm = () => {
         <div className="flex justify-content-center align-items-center min-h-screen">
             <Toast ref={toast} />
             <Card title={header} footer={footer} className="w-full max-w-md">
-                {/* Note: The form and inputs remain the same */}
                 <form onSubmit={handleSubmit(onSubmit)} className="p-fluid flex flex-column gap-4">
                     {/* Email Input */}
                     <FloatLabel>
@@ -98,7 +103,11 @@ export const AuthForm = () => {
                                 pattern: { value: /^\S+@\S+$/i, message: 'Invalid email address.' }
                             }}
                             render={({ field, fieldState }) => (
-                                <InputText id={field.name} {...field} className={classNames({ 'p-invalid': fieldState.error })} />
+                                <InputText 
+                                    id={field.name} 
+                                    {...field} 
+                                    className={classNames({ 'p-invalid': fieldState.error })} 
+                                />
                             )}
                         />
                         <label htmlFor="email">Email</label>
@@ -112,7 +121,13 @@ export const AuthForm = () => {
                             control={control}
                             rules={{ required: 'Password is required.' }}
                             render={({ field, fieldState }) => (
-                                <Password id={field.name} {...field} toggleMask feedback={isRegister} className={classNames({ 'p-invalid': fieldState.error })} />
+                                <Password 
+                                    id={field.name} 
+                                    {...field} 
+                                    toggleMask 
+                                    feedback={isRegister} 
+                                    className={classNames({ 'p-invalid': fieldState.error })} 
+                                />
                             )}
                         />
                         <label htmlFor="password">Password</label>
@@ -128,10 +143,15 @@ export const AuthForm = () => {
                                     control={control}
                                     rules={{
                                         required: 'Password confirmation is required.',
-                                        validate: value => value === password_watch || 'The passwords do not match.'
+                                        validate: (value: string) => value === password_watch || 'The passwords do not match.'
                                     }}
                                     render={({ field, fieldState }) => (
-                                        <Password id={field.name} {...field} toggleMask className={classNames({ 'p-invalid': fieldState.error })} />
+                                        <Password 
+                                            id={field.name} 
+                                            {...field} 
+                                            toggleMask 
+                                            className={classNames({ 'p-invalid': fieldState.error })} 
+                                        />
                                     )}
                                 />
                                 <label htmlFor="confirmPassword">Confirm Password</label>
