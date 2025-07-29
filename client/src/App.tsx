@@ -8,7 +8,7 @@ import Notifications from './pages/Notifications';
 import ProfileSettings from './pages/ProfileSettings';
 import Authenticate from './pages/Authenticate';
 
-import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/themes/tailwind-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 // import 'primeicons/primeicons.css';
 

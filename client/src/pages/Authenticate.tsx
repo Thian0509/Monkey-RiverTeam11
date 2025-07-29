@@ -81,10 +81,10 @@ export default function Authenticate() {
     };
 
     return (
-        <div className="flex items-center justify-center w-screen bg-white h-screen">
+        <div className="flex items-center justify-center w-screen h-screen">
             <Toast ref={toast} />
             <div className="flex flex-col gap-4 max-w-md w-full">
-              <h2 className="text-center text-black text-2xl">{isRegister ? 'Register' : 'Login'}</h2>
+              <h2 className="text-center text-2xl">{isRegister ? 'Register' : 'Login'}</h2>
               <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
                   {/* Name Input (only for registration) */}
                   {isRegister && (

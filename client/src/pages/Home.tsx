@@ -12,7 +12,7 @@ function Home() {
   // }
 
   return (
-    <div className="w-screen h-screen bg-white">
+    <div className="w-screen h-screen">
     {/* //   <h1>Welcome to the Home Page</h1>
     //   {user ? (
     //     <p>Hello, {user.email}!</p>
