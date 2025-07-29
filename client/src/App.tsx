@@ -5,7 +5,6 @@ import './App.css'; // Keep your existing global CSS if any
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 
-
 function App() {
   const [showRegister, setShowRegister] = useState(false);
 
