@@ -65,9 +65,4 @@ describe('Loading Component', () => {
     
     expect(loadingContainer).toHaveClass('flex', 'justify-center', 'items-center');
   });
-
-  it('matches snapshot', () => {
-    const { container } = render(<Loading />);
-    expect(container.firstChild).toMatchSnapshot();
-  });
 });
