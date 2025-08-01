@@ -1,7 +1,9 @@
 {
   "name": "monkeyriverteam11",
   "scripts": {
-    "start": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\"",
+    "dev": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\"",
+    "build": "concurrently \"npm run build --prefix client\" \"npm run build --prefix server\"",
+    "prod": "npm run start --prefix server",
     "test": "vitest"
   },
   "dependencies": {

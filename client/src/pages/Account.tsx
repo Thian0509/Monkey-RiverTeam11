@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { TabView, TabPanel } from 'primereact/tabview';
 import { Dropdown } from 'primereact/dropdown';
-import { Password } from 'primereact/password';
 import { Toast } from 'primereact/toast';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { InputNumber } from 'primereact/inputnumber';
@@ -150,7 +149,7 @@ const ProfileSettings: React.FC = () => {
                   <Checkbox
                     inputId="receiveEmailNotifications"
                     checked={formData.receiveEmailNotifications}
-                    onChange={(e) => handleInputChange('receiveEmailNotifications', e.checked)}
+                    onChange={(e) => handleInputChange('receiveEmailNotifications', e.checked as boolean)}
                   />
                   <label htmlFor="receiveEmailNotifications" className="ml-2 font-bold">Opt-in for email notifications about your country's risk updates</label>
                 </div>

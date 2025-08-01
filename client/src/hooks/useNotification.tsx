@@ -1,4 +1,3 @@
-// client/src/hooks/useNotification.tsx
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import axios from 'axios';
 import { useAuth } from './useAuth'; // Your existing auth hook

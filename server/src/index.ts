@@ -40,12 +40,17 @@ import monitoredDestinationRoutes from "./routes/monitoredDestinationRoutes";
 import alertRoutes from './routes/alertRoutes';
 import accountRoutes from './routes/accountRoutes';
 
-
 app.use("/api/users", usersRoutes);
 app.use("/api/auth", authRoutes);
-app.use("/api/destinations", monitoredDestinationRoutes); // This is correctly mounted
+app.use("/api/destinations", monitoredDestinationRoutes);
 app.use("/api/alerts", alertRoutes);
 app.use("/api/account", accountRoutes);
+
+const path = require("path");
+app.use(express.static(path.join(__dirname, "../../client/dist")));
+app.get(/.*/, (req, res) => {
+  res.sendFile(path.join(__dirname, "../../client/dist/index.html"));
+});
 
 const PORT = process.env.PORT || 5050;
 app.listen(PORT, () => {

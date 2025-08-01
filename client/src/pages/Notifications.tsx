@@ -9,13 +9,13 @@ export default function Notifications() {
       <div className="w-">
         {notifications.length > 0 ? (
           <>
-            <div className="flex justify-content-end mb-3 gap-2"> {/* Added gap for spacing */}
+            <div className="flex justify-content-end mb-3 gap-2">
                 <Button
                     label="Mark All Read"
                     icon="pi pi-check-circle"
                     onClick={markAllAsRead}
                     className="p-button-sm p-button-outlined"
-                    disabled={notifications.every(n => n.read)} // Disable if all are already read
+                    disabled={notifications.every(n => n.read)}
                 />
             </div>
             <ul style={{ listStyleType: 'none', padding: 0 }}>
@@ -26,13 +26,13 @@ export default function Notifications() {
                   style={{
                     backgroundColor: notification.read ? '#f0f0f0' : '#e0f7fa',
                     borderLeft: notification.read ? 'none' : '5px solid #007ad9',
-                    display: 'flex', // Ensure flex for proper alignment of text and button
+                    display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'space-between' // Distribute space between content and button
+                    justifyContent: 'space-between'
                   }}
-                  onClick={() => !notification.read && markAsRead(notification.id)} // Mark as read on click if not already read
+                  onClick={() => !notification.read && markAsRead(notification.id)}
                 >
-                  <div style={{ flexGrow: 1, cursor: notification.read ? 'default' : 'pointer' }}> {/* This div takes up available space */}
+                  <div style={{ flexGrow: 1, cursor: notification.read ? 'default' : 'pointer' }}>
                     <p className="m-0" style={{ fontWeight: notification.read ? 'normal' : 'bold' }}>
                       {notification.message}
                     </p>
@@ -40,9 +40,9 @@ export default function Notifications() {
                   </div>
                   <Button
                     icon="pi pi-times"
-                    className="p-button-rounded p-button-text p-button-sm" // Smaller, text-only button
+                    className="p-button-rounded p-button-text p-button-sm"
                     onClick={(e) => {
-                      e.stopPropagation(); // Prevent li's onClick from firing
+                      e.stopPropagation();
                       removeNotification(notification.id);
                     }}
                     aria-label={`Remove notification: ${notification.message}`}

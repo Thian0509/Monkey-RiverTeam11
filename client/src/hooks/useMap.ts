@@ -7,7 +7,7 @@ export const useMap = () => {
   useEffect(() => {
     const fetchMapData = async () => {
       try {
-        const token = localStorage.getItem('token'); // or sessionStorage
+        const token = localStorage.getItem('token');
         if (!token) {
           throw new Error('No authentication token found');
         }
@@ -22,9 +22,9 @@ export const useMap = () => {
         if (!response.ok) {
           throw new Error('Failed to fetch map data');
         }
-        console.log('Fetching map data from /api/destinations'); // Debugging line
+        console.log('Fetching map data from /api/destinations');
         const data = await response.json();
-        console.log('Map data fetched:', data); // Debugging line to check fetched data
+        console.log('Map data fetched:', data);
         setMapData(data);
       } catch (error) {
         console.error('Error fetching map data:', error);

@@ -209,11 +209,11 @@ export const useTravelRisk = () => {
     };
 
     const onCellEditComplete = (e: any) => {
-        let { rowData, newValue, field } = e;
+        const { rowData, newValue, field } = e;
 
         if (newValue !== rowData[field]) {
-            let updatedDestinations = [...destinations];
-            let targetIndex = updatedDestinations.findIndex(d => d._id === rowData._id);
+            const updatedDestinations = [...destinations];
+            const targetIndex = updatedDestinations.findIndex(d => d._id === rowData._id);
 
             if (targetIndex !== -1) {
                 const tempUpdatedRow = { ...rowData, [field]: newValue };
